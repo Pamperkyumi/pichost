@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  },
+  "scripts": {
+    "dev": "bunx concurrently -n frontend,backend --cwd backend \"bun run dev\" --cwd frontend \"bun run dev\""
+  }
+}
