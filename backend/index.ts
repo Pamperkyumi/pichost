@@ -33,19 +33,6 @@ const app = new Elysia()
     })
   )
 
-  .use(
-    staticPlugin({
-      assets: "public/assets",
-      prefix: "/assets",
-    })
-  )
-  .use(
-    staticPlugin({
-      assets: "public",
-      prefix: "/",
-    })
-  )
-
   .get("/", () => new Response(INDEX_HTML, {
     headers: { "Content-Type": "text/html; charset=utf-8" }
   }))
