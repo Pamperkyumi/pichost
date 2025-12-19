@@ -173,7 +173,7 @@ onBeforeUnmount(() => {
 
     <div class="container">
       <div class="content-wrapper">
-        <h1 class="maintitle">我的图床</h1>
+        <h1 class="maintitle">Pamperのimagehosting</h1>
 
         <section class="upload-card">
           <h2>上传图片</h2>
@@ -269,6 +269,21 @@ onBeforeUnmount(() => {
         </section>
       </div>
     </div>
+    <footer class="site-footer" role="contentinfo">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <span class="footer-item">© {{ new Date().getFullYear() }} pichost</span>
+          <span class="footer-sep">•</span>
+          <a href="https://icp.gov.moe/?keyword=20250435" target="_blank">萌ICP备20250435号</a>
+        </div>
+
+        <div class="footer-right">
+          <a class="footer-link" href="/privacy">隐私政策</a>
+          <span class="footer-sep">•</span>
+          <a class="footer-link" href="/terms">使用条款</a>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -593,6 +608,79 @@ body {
   transform: translateY(-1px);
   box-shadow: 0 12px 30px rgba(37, 99, 235, 0.45);
 }
+.site-footer {
+  position: relative;
+  width: 100%;
+  margin-top: 28px;
+  padding: 18px 16px 22px;
+}
+
+.footer-inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.footer-left,
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.footer-item {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.footer-sep {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.35);
+  user-select: none;
+}
+
+.footer-link {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.72);
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.footer-link:hover {
+  color: rgba(0, 0, 0, 0.9);
+  opacity: 0.95;
+  text-decoration: underline;
+}
+
+.footer-link:active {
+  opacity: 0.8;
+}
+
+
+@media (max-width: 640px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-right {
+    opacity: 0.9;
+  }
+}
+
 
 @media (max-width: 1024px) {
   .background-layer {
