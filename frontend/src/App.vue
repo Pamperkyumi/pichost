@@ -171,7 +171,7 @@ onBeforeUnmount(() => {
   <div class="app">
     <div class="background-layer"></div>
 
-    <div class="container">
+    <main class="container" main-content>
       <div class="content-wrapper">
         <h1 class="maintitle">Pamperのimagehosting</h1>
 
@@ -268,7 +268,7 @@ onBeforeUnmount(() => {
           </div>
         </section>
       </div>
-    </div>
+    </main>
     <footer class="site-footer" role="contentinfo">
       <div class="footer-inner">
         <div class="footer-left">
@@ -300,6 +300,7 @@ body {
 }
 
 body {
+  min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
     "Microsoft YaHei", system-ui, sans-serif;
 }
@@ -308,7 +309,9 @@ body {
   position: relative;
   min-height: 100vh;
   width: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .background-layer {
@@ -323,12 +326,14 @@ body {
   z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
+  flex: 1;
+  width: 100%;
   padding: 40px 20px;
-  min-height: 100vh;
   display: flex;
-  align-items: center;      
-  justify-content: center;  
+  align-items: center;
+  justify-content: center;
 }
+
 
 .content-wrapper {
   width: 100%;
@@ -611,9 +616,10 @@ body {
 .site-footer {
   position: relative;
   width: 100%;
-  margin-top: 28px;
-  padding: 18px 16px 22px;
+  margin-top: auto;
+  padding: 14px 16px 18px;
 }
+
 
 .footer-inner {
   max-width: 980px;
@@ -682,69 +688,125 @@ body {
 }
 
 
+/* =========================
+   Responsive (smoothed)
+   ========================= */
+
+/* 1) <=1024：不要“翻面”，只做柔和收敛 */
 @media (max-width: 1024px) {
   .background-layer {
-    display: none;
+    /* 不要直接 display:none; 改为弱化，避免风格突变 */
+    display: block;
+    opacity: 0.45;
+    filter: blur(2px);
+    transform: scale(1.03);
   }
 
   .app {
-    background-color: #ffffff;
+    /* 仍然保持整体深色氛围（桌面一致），避免变白突兀 */
+    background-color: transparent;
   }
 
   .container {
     min-height: 100vh;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 20px 0 30px;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 18px;
     max-width: 100%;
   }
 
   .content-wrapper {
-    max-width: 100%;
+    max-width: 720px;
   }
 
   .maintitle {
-    color: #111827;
-    text-shadow: none;
-    margin-bottom: 16px;
-    font-size: 2.1rem;
-    padding: 0 20px;
+    /* 字号不要跳太多 */
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    padding: 0 8px;
+    color: #ffffff;
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
   }
 
   .upload-card {
-    border-radius: 0;
-    box-shadow: none;
-    border: none;
-    border-top: 1px solid #e5e7eb;
-    width: 100%;
-    max-width: 100%;
-    padding: 20px 20px 26px;
-  }
-}
-
-@media (max-width: 768px) {
-  .maintitle {
-    font-size: 1.9rem;
-    padding: 0 18px;
-  }
-
-  .upload-card h2 {
-    font-size: 1.4rem;
+    /* 保留卡片感，只是更“紧凑” */
+    border-radius: 18px;
+    padding: 24px 20px 26px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22);
+    background: rgba(255, 255, 255, 0.96);
   }
 
   .upload-box {
-    padding: 40px 16px;
+    padding: 44px 16px;
+  }
+
+  .image-preview img {
+    max-height: 360px;
+  }
+
+  .site-footer {
+    margin-top: 22px;
+  }
+
+  .footer-inner {
+    max-width: 720px;
   }
 }
 
-@media (max-width: 576px) {
+/* 2) <=768：继续收敛布局和控件尺寸（小步变化） */
+@media (max-width: 768px) {
+  .background-layer {
+    opacity: 0.38;
+    filter: blur(2.5px);
+  }
+
+  .container {
+    padding: 22px 14px;
+  }
+
+  .content-wrapper {
+    max-width: 620px;
+  }
+
   .maintitle {
-    font-size: 1.7rem;
-    padding: 0 14px;
+    font-size: 2.0rem;
+    margin-bottom: 16px;
+    letter-spacing: 0.06em;
+  }
+
+  .upload-card h2 {
+    font-size: 1.45rem;
+    margin-bottom: 16px;
   }
 
   .upload-card {
-    padding: 18px 16px 24px;
+    border-radius: 16px;
+    padding: 20px 16px 22px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.20);
+  }
+
+  .upload-box {
+    padding: 38px 14px;
+    border-radius: 12px;
+  }
+
+  .upload-placeholder span {
+    font-size: 16px;
+  }
+
+  .upload-hint {
+    font-size: 13px;
+  }
+
+  .image-preview {
+    margin-top: 22px;
+    padding-top: 18px;
+  }
+
+  .image-preview img {
+    max-height: 320px;
+    border-radius: 12px;
   }
 
   .preview-actions {
@@ -753,29 +815,102 @@ body {
 
   .upload-btn,
   .cancel-btn {
-    min-width: 120px;
-    padding: 9px 20px;
+    min-width: 128px;
+    padding: 10px 20px;
     font-size: 14px;
+  }
+
+  .footer-inner {
+    border-radius: 12px;
+    padding: 12px 14px;
   }
 }
 
+/* 3) <=576：真正移动端（仍保持“同款卡片”，但更轻更紧凑） */
+@media (max-width: 576px) {
+  .background-layer {
+    opacity: 0.32;
+    filter: blur(3px);
+  }
+  .main-content {
+    padding-top: 18px
+  }
+
+  .container {
+    justify-content: flex-start;
+    padding: 18px 12px 16px;
+  }
+
+  .content-wrapper {
+    width: 100%;
+  }
+
+   .maintitle {
+    margin-top: 10px;
+    margin-bottom: 16px;
+    font-size: 1.7rem;
+  }
+
+  .upload-card {
+    margin-top: 10px;
+    border-radius: 14px;
+    padding: 16px 14px 18px;
+  }
+
+  .upload-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .upload-box {
+    padding: 32px 12px;
+  }
+
+  .image-preview h3 {
+    font-size: 1.2rem;
+  }
+
+  .preview-actions {
+    gap: 8px;
+  }
+
+  .upload-btn,
+  .cancel-btn {
+    min-width: 120px;
+    padding: 9px 18px;
+    font-size: 14px;
+  }
+
+  .url-input {
+    min-width: 160px;
+    font-size: 12px;
+    padding: 9px 12px;
+  }
+
+  .copy-btn {
+    padding: 9px 14px;
+    font-size: 12px;
+  }
+  .site-footer{
+    padding: 12px 12px 16px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+/* 4) 深色模式：别只在 <=1024 才生效，移动端也保持一致风格 */
 @media (prefers-color-scheme: dark) {
   @media (max-width: 1024px) {
     .app {
-      background-color: #111827;
-    }
-
-    .container {
-      background-color: #111827;
-    }
-
-    .maintitle {
-      color: #f9fafb;
+      background-color: transparent;
     }
 
     .upload-card {
-      background-color: #111827;
-      border-top: 1px solid #111827;
+      background: rgba(17, 24, 39, 0.92);
+      border-color: rgba(255, 255, 255, 0.10);
     }
 
     .upload-card h2,
@@ -785,8 +920,8 @@ body {
     }
 
     .upload-box {
-      background: linear-gradient(135deg, #111827 0%, #020617 100%);
-      border-color: #374151;
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.92) 0%, rgba(2, 6, 23, 0.92) 100%);
+      border-color: rgba(55, 65, 81, 0.9);
     }
 
     .upload-placeholder span {
@@ -798,14 +933,28 @@ body {
     }
 
     .image-info {
-      background-color: #020617;
-      border-color: #1f2937;
+      background-color: rgba(2, 6, 23, 0.85);
+      border-color: rgba(31, 41, 55, 0.9);
     }
 
     .url-input {
-      background-color: #020617;
-      border-color: #374151;
+      background-color: rgba(2, 6, 23, 0.85);
+      border-color: rgba(55, 65, 81, 0.9);
       color: #e5e7eb;
+    }
+
+    .footer-inner {
+      background: rgba(17, 24, 39, 0.65);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .footer-item,
+    .footer-link {
+      color: rgba(229, 231, 235, 0.85);
+    }
+
+    .footer-sep {
+      color: rgba(229, 231, 235, 0.35);
     }
   }
 }
